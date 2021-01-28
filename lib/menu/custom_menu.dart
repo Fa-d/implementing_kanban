@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
-
-import 'arrow_clipper.dart';
+import 'package:implementing_kanban/cards_specifications_models/label_models.dart';
 
 class SimpleAccountMenu extends StatefulWidget {
-  final List<Icon> icons;
   final BorderRadius borderRadius;
-  final Color backgroundColor;
-  final Color iconColor;
+
   final ValueChanged<int> onChange;
+  final double width;
+  final String buttonText;
 
   const SimpleAccountMenu({
     Key key,
-    this.icons,
+    this.buttonText,
     this.borderRadius,
-    this.backgroundColor = const Color(0xFFF67C0B9),
-    this.iconColor = Colors.black,
     this.onChange,
-  })  : assert(icons != null),
-        super(key: key);
+    this.width,
+  }) : super(key: key);
 
   @override
   _SimpleAccountMenuState createState() => _SimpleAccountMenuState();
@@ -29,7 +26,7 @@ class _SimpleAccountMenuState extends State<SimpleAccountMenu>
   bool isMenuOpen = false;
   Offset buttonPosition;
   Size buttonSize;
-  OverlayEntry _overlayEntry;
+  OverlayEntry _anotherOne;
   BorderRadius _borderRadius;
   AnimationController _animationController;
 
@@ -57,7 +54,7 @@ class _SimpleAccountMenuState extends State<SimpleAccountMenu>
   }
 
   void closeMenu() {
-    _overlayEntry.remove();
+    _anotherOne.remove();
     _animationController.reverse();
     isMenuOpen = !isMenuOpen;
   }
@@ -65,8 +62,8 @@ class _SimpleAccountMenuState extends State<SimpleAccountMenu>
   void openMenu() {
     findButton();
     _animationController.forward();
-    _overlayEntry = _overlayEntryBuilder();
-    Overlay.of(context).insert(_overlayEntry);
+    _anotherOne = _anotherEntryBuilder();
+    Overlay.of(context).insert(_anotherOne);
     isMenuOpen = !isMenuOpen;
   }
 
@@ -75,15 +72,10 @@ class _SimpleAccountMenuState extends State<SimpleAccountMenu>
     return Container(
       key: _key,
       decoration: BoxDecoration(
-        color: Color(0xFFF5C6373),
+        color: Colors.transparent,
         borderRadius: _borderRadius,
       ),
-      child: IconButton(
-        icon: AnimatedIcon(
-          icon: AnimatedIcons.menu_close,
-          progress: _animationController,
-        ),
-        color: Colors.white,
+      child: FlatButton(
         onPressed: () {
           if (isMenuOpen) {
             closeMenu();
@@ -91,75 +83,34 @@ class _SimpleAccountMenuState extends State<SimpleAccountMenu>
             openMenu();
           }
         },
+        child: Text(widget.buttonText),
       ),
     );
   }
 
-  OverlayEntry _overlayEntryBuilder() {
-    return OverlayEntry(
-      builder: (context) {
-        return Positioned(
-          top: buttonPosition.dy + buttonSize.height,
-          left: buttonPosition.dx,
-          width: buttonSize.width,
-          child: Material(
-            color: Colors.transparent,
-            child: Stack(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: ClipPath(
-                    clipper: ArrowClipper(),
-                    child: Container(
-                      width: 17,
-                      height: 17,
-                      color: widget.backgroundColor ?? Color(0xFFF),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15.0),
-                  child: Container(
-                    height: widget.icons.length * buttonSize.height,
-                    decoration: BoxDecoration(
-                      color: widget.backgroundColor,
-                      borderRadius: _borderRadius,
-                    ),
-                    child: Theme(
-                      data: ThemeData(
-                        iconTheme: IconThemeData(
-                          color: widget.iconColor,
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: List.generate(widget.icons.length, (index) {
-                          return GestureDetector(
-                            onTap: () {
-                              widget.onChange(index);
-                              closeMenu();
-                            },
-                            child: Container(
-                              width: 200,
-                              height: buttonSize.height,
-                              child: Column(
-                                children: [
-                                  widget.icons[index],
-                                  Text("ulala"),
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+  OverlayEntry _anotherEntryBuilder() {
+    return OverlayEntry(builder: (context) {
+      return Positioned(
+        top: buttonPosition.dy + buttonSize.height,
+        left: buttonPosition.dx,
+        child: Material(
+          color: Colors.transparent,
+          child: Column(
+            children: [
+              LayoutBuilder(builder: (
+                BuildContext context,
+                BoxConstraints constraints,
+              ) {
+                print(constraints.maxWidth);
+                return SizedBox(
+                  child: LabelsModel(),
+                  width: buttonSize.width * 5,
+                );
+              }),
+            ],
           ),
-        );
-      },
-    );
+        ),
+      );
+    });
   }
 }

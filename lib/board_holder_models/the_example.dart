@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:implementing_kanban/item_popup/popup_view.dart';
 import 'package:implementing_kanban/kaban_main/kanban_item.dart';
 import 'package:implementing_kanban/kaban_main/kanban_list.dart';
 import 'package:implementing_kanban/kaban_main/kanban_main_view.dart';
 import 'package:implementing_kanban/kaban_main/kanban_view_controller.dart';
-import 'package:implementing_kanban/menu/custom_menu.dart';
 
 import 'board_item_object.dart';
 import 'board_list_object.dart';
@@ -140,140 +140,4 @@ class _BoardViewExampleState extends State<BoardViewExample> {
   }
 
   bool footer_check = true;
-
-  popUpTest(context) {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Stack(
-            overflow: Overflow.visible,
-            children: <Widget>[
-              Positioned(
-                right: -40.0,
-                top: -40.0,
-                child: InkResponse(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: CircleAvatar(
-                    child: Icon(Icons.close),
-                    backgroundColor: Colors.red,
-                  ),
-                ),
-              ),
-              Form(
-                // key: _formKey,
-                child: Row(
-                  children: [
-                    Column(
-                      // mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.book),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: 10,
-                                    ),
-                                  ),
-                                  Text(
-                                    "The name of the board",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: Row(
-                                  children: [
-                                    Text("In List"),
-                                    FlatButton(
-                                      onPressed: () {},
-                                      child: Text("TODO's"),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        // Padding(
-                        //   padding: EdgeInsets.all(8.0),
-                        //   child: TextFormField(),
-                        // ),
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: RaisedButton(
-                                child: Text("Submitß"),
-                                onPressed: () {
-                                  // if (_formKey.currentState.validate()) {
-                                  //   _formKey.currentState.save();}
-                                }),
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width / 3.5,
-                        ),
-                      ],
-                    ),
-                    Container(
-                      color: Colors.blueAccent[100],
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width / 5,
-                            ),
-                            Text("Add to card"),
-                            Text("Actions"),
-                            Text("PowerUps"),
-                            FlatButton(
-                              onPressed: () {},
-                              child: Theme(
-                                data: ThemeData(
-                                  iconTheme: IconThemeData(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                child: Container(
-                                  child: SimpleAccountMenu(
-                                    icons: [
-                                      Icon(Icons.person),
-                                      Icon(Icons.settings),
-                                      Icon(Icons.credit_card),
-                                    ],
-                                    iconColor: Colors.white,
-                                    onChange: (index) {
-                                      print(index);
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 }
