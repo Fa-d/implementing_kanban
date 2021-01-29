@@ -58,6 +58,7 @@ class _ButtonModelsState extends State<ButtonModels> {
   LabelsModel() {
     return Material(
       child: Container(
+        color: Colors.grey[250],
         width: 400,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +70,10 @@ class _ButtonModelsState extends State<ButtonModels> {
                   height: 10,
                   width: 10,
                 ),
-                Text("Add to ${widget.buttonName}"),
+                Text(
+                  "Add to ${widget.buttonName}",
+                  style: TextStyle(fontSize: 17),
+                ),
                 IconButton(
                   icon: Icon(Icons.cancel),
                   onPressed: () {
