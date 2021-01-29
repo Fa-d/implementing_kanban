@@ -1,25 +1,37 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:implementing_kanban/menu/button_models.dart';
+import 'package:implementing_kanban/popups/botton_popups/button_models.dart';
 
 class RightSidePopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey[100],
+      color: Colors.grey[50],
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               width: MediaQuery.of(context).size.width / 5,
             ),
-            Text("Add To Card"),
+            Text(
+              "Add To Card",
+              style: TextStyle(fontWeight: FontWeight.w700),
+            ),
             ..._addToCard(),
             SizedBox(height: 20),
-            Text("PowerUps"),
+            Text(
+              "PowerUps",
+              style: TextStyle(fontWeight: FontWeight.w700),
+            ),
+            SizedBox(height: 10),
+            ButtonModels(buttonName: "TimeTracker"),
             SizedBox(height: 20),
-            Text("Actions"),
+            Text(
+              "Actions",
+              style: TextStyle(fontWeight: FontWeight.w700),
+            ),
             ..._actions(),
           ],
         ),

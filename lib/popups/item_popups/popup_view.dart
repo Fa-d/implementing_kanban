@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:implementing_kanban/item_popup/left_side.dart';
-import 'package:implementing_kanban/item_popup/right_side_popup.dart';
+
+
+import 'left_side.dart';
+import 'right_side_popup.dart';
+
 
 popUpTest(context) {
   return showDialog(
@@ -28,7 +31,7 @@ popUpTest(context) {
               child: Row(
                 children: [
                   LeftSidePopUp(),
-                  RightSidePopup(),
+                  SingleChildScrollView(child: RightSidePopup()),
                 ],
               ),
             ),

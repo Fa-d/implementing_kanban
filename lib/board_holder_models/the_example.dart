@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:implementing_kanban/item_popup/popup_view.dart';
 import 'package:implementing_kanban/kaban_main/kanban_item.dart';
 import 'package:implementing_kanban/kaban_main/kanban_list.dart';
 import 'package:implementing_kanban/kaban_main/kanban_main_view.dart';
 import 'package:implementing_kanban/kaban_main/kanban_view_controller.dart';
+import 'package:implementing_kanban/popups/item_popups/popup_view.dart';
 
 import 'board_item_object.dart';
 import 'board_list_object.dart';
