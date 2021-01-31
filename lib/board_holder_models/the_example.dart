@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hooks_riverpod/all.dart';
 import 'package:implementing_kanban/kaban_main/kanban_item.dart';
 import 'package:implementing_kanban/kaban_main/kanban_list.dart';
 import 'package:implementing_kanban/kaban_main/kanban_main_view.dart';
@@ -38,8 +39,8 @@ class _BoardViewExampleState extends State<BoardViewExample> {
       ));
     }
     return KanbanMainView(
-      lists: _lists,
-      kanbanViewController: boardViewController,
+        lists: _lists,
+        kanbanViewController: boardViewController,
     );
   }
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:implementing_kanban/card_item_models/labels_model.dart';
 
-class ButtonModels extends StatefulWidget {
+class ButtonModels extends StatefulHookWidget {
   final String buttonName;
 
   ButtonModels({Key key, @required this.buttonName}) : super(key: key);
@@ -38,7 +39,9 @@ class _ButtonModelsState extends State<ButtonModels> {
       },
       child: Container(
         color: Colors.grey[200],
-        child: Text(widget.buttonName),
+        child: Text(
+          widget.buttonName,
+        ),
       ),
     );
   }

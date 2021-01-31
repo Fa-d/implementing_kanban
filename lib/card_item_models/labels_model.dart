@@ -1,23 +1,20 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:implementing_kanban/providers_packs/all_providers.dart';
 
-class LabelModel extends StatefulWidget {
+class LabelModel extends StatefulHookWidget {
   @override
   _LabelModelState createState() => _LabelModelState();
 }
 
 class _LabelModelState extends State<LabelModel> {
   bool page = true;
-  Color screenPickerColor;
-
-  @override
-  void initState() {
-    super.initState();
-    screenPickerColor = Colors.blue;
-  }
 
   @override
   Widget build(BuildContext context) {
+    final colorSel = useProvider(selectedColorOfLabel.state);
     return page
         ? Padding(
             padding: const EdgeInsets.all(20.0),
@@ -52,12 +49,12 @@ class _LabelModelState extends State<LabelModel> {
             ),
           )
         : SingleChildScrollView(
-          child: Column(
+            child: Column(
               children: [
                 ColorPicker(
-                  color: screenPickerColor,
+                  color: colorSel,
                   onColorChanged: (Color color) =>
-                      setState(() => screenPickerColor = color),
+                      context.read(selectedColorOfLabel).setColor(color),
                   heading: Text(
                     'Select color',
                     style: Theme.of(context).textTheme.headline5,
@@ -74,9 +71,11 @@ class _LabelModelState extends State<LabelModel> {
                   padding: const EdgeInsets.all(15.0),
                   child: TextField(
                     decoration: InputDecoration(
+                      fillColor: colorSel,
+                      filled: true,
                       hintText: "The name of card",
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(color: screenPickerColor),
+                        borderSide: BorderSide(color: colorSel),
                       ),
                       prefixIcon: const Icon(
                         Icons.format_paint_outlined,
@@ -91,7 +90,7 @@ class _LabelModelState extends State<LabelModel> {
                 Center(
                   child: FlatButton(
                     onPressed: () {},
-                    child: Text("Select"),
+                    child: Text("Add"),
                   ),
                 ),
                 SizedBox(
@@ -99,7 +98,7 @@ class _LabelModelState extends State<LabelModel> {
                 ),
               ],
             ),
-        );
+          );
   }
 
   color_row(Color color) {
