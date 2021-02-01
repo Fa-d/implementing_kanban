@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:implementing_kanban/popups/botton_popups/button_models.dart';
+import 'package:implementing_kanban/providers_packs/all_providers.dart';
 
-popUpTest(context) {
+popUpTest(context, overlayProv) {
+
   return showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          scrollable: true,
             content: Row(children: [
           leftSidePopUp(context),
           rightSidePopup(context),
         ]));
-      });
+      }).whenComplete(() {
+        try{
+          overlayProv.remove();
+        }catch(e){
+          print(e.toString());
+        }
+  });
 }
 
 leftSidePopUp(BuildContext context) =>

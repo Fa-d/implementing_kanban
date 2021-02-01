@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:implementing_kanban/kaban_main/kanban_item.dart';
 import 'package:implementing_kanban/kaban_main/kanban_list.dart';
 import 'package:implementing_kanban/kaban_main/kanban_main_view.dart';
 import 'package:implementing_kanban/kaban_main/kanban_view_controller.dart';
 import 'package:implementing_kanban/popups/item_popups/popup_view.dart';
+import 'package:implementing_kanban/providers_packs/all_providers.dart';
 
 import 'board_item_object.dart';
 import 'board_list_object.dart';
 
-class BoardViewExample extends StatefulWidget {
+class BoardViewExample extends StatefulHookWidget {
   @override
   _BoardViewExampleState createState() => _BoardViewExampleState();
 }
@@ -28,9 +30,10 @@ class _BoardViewExampleState extends State<BoardViewExample> {
   ];
 
   KanbanViewController boardViewController = new KanbanViewController();
-
+  var overlayProv ;
   @override
   Widget build(BuildContext context) {
+    overlayProv = useProvider(currentOverlayCheck.state);
     List<KanbanList> _lists = <KanbanList>[];
     for (int i = 0; i < _listData.length; i++) {
       _lists.add(_createBoardList(
@@ -126,7 +129,7 @@ class _BoardViewExampleState extends State<BoardViewExample> {
                       child: Icon(Icons.check),
                       onTap: () {
                         print("Submission clicked");
-                        popUpTest(context);
+                        popUpTest(context, overlayProv);
                         // setState(() {
                         //   footer_check = true;
                         // });
