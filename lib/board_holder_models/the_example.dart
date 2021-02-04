@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
+import 'package:implementing_kanban/card_item_models/models/label_object.dart';
 import 'package:implementing_kanban/kaban_main/kanban_item.dart';
 import 'package:implementing_kanban/kaban_main/kanban_list.dart';
 import 'package:implementing_kanban/kaban_main/kanban_main_view.dart';
@@ -18,6 +19,7 @@ class BoardViewExample extends StatefulHookWidget {
 }
 
 class _BoardViewExampleState extends State<BoardViewExample> {
+
   List<BoardListObject> _listData = [
     BoardListObject(title: "List title 1", items: <BoardItemObject>[
       new BoardItemObject(title: 'sdf'),
@@ -30,20 +32,21 @@ class _BoardViewExampleState extends State<BoardViewExample> {
   ];
 
   KanbanViewController boardViewController = new KanbanViewController();
-  var overlayProv ;
+
   @override
   Widget build(BuildContext context) {
-    overlayProv = useProvider(currentOverlayCheck.state);
+
     List<KanbanList> _lists = <KanbanList>[];
     for (int i = 0; i < _listData.length; i++) {
       _lists.add(_createBoardList(
         _listData[i],
-        context,
+        context
+
       ));
     }
     return KanbanMainView(
-        lists: _lists,
-        kanbanViewController: boardViewController,
+      lists: _lists,
+      kanbanViewController: boardViewController,
     );
   }
 
@@ -128,8 +131,8 @@ class _BoardViewExampleState extends State<BoardViewExample> {
                     child: InkWell(
                       child: Icon(Icons.check),
                       onTap: () {
-                        print("Submission clicked");
-                        popUpTest(context, overlayProv);
+
+                        popUpTest(context);
                         // setState(() {
                         //   footer_check = true;
                         // });

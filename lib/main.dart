@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/all.dart';
 
-
 import 'board_holder_models/the_example.dart';
 
 void main() {
@@ -42,4 +41,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-

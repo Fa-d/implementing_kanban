@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:implementing_kanban/card_item_models/models/label_object.dart';
 
 class ColorPicked extends StateNotifier<Color> {
   ColorPicked() : super(Colors.red);
@@ -14,7 +15,6 @@ class CurrentPopupClass extends StateNotifier {
   CurrentPopupClass() : super(true);
 
   void setCurrentPopup(val) => state = val;
-
 }
 
 final currentPopup =
@@ -29,10 +29,26 @@ class OverlayChecking extends StateNotifier {
 final currentOverlayCheck =
     StateNotifierProvider<OverlayChecking>((_) => OverlayChecking());
 
-// class ban extends StateNotifier {
-//   ban() : super(false);
-//
-//   void backEnabled(entry) => state = entry;
-// }
-//
-// final popupBackButtonEnabled = StateNotifierProvider<ban>((_) => ban());
+final selectedLabels =
+    StateNotifierProvider<CurrentLabelList>((_) => CurrentLabelList([]));
+
+class CurrentLabelList extends StateNotifier<List<SingleLabelObject>> {
+  CurrentLabelList(List<SingleLabelObject> items)
+      : super(items ?? <SingleLabelObject>[]);
+
+  addToLabel(SingleLabelObject item) => state = [...state, item];
+}
+
+final subPopupLocation = StateNotifierProvider((_) => SubPopupLocClass(
+      PopupLoc(
+        offset: Offset.zero,
+        // link: LayerLink(),
+
+      ),
+    ));
+
+class SubPopupLocClass extends StateNotifier<PopupLoc> {
+  SubPopupLocClass(PopupLoc state) : super(state);
+
+  setOffsetVal(PopupLoc model) => state = model;
+}
