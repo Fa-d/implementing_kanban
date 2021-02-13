@@ -43,7 +43,6 @@ final subPopupLocation = StateNotifierProvider((_) => SubPopupLocClass(
       PopupLoc(
         offset: Offset.zero,
         // link: LayerLink(),
-
       ),
     ));
 
@@ -52,3 +51,14 @@ class SubPopupLocClass extends StateNotifier<PopupLoc> {
 
   setOffsetVal(PopupLoc model) => state = model;
 }
+
+class DescriptionEditingClass extends StateNotifier {
+  DescriptionEditingClass() : super(true);
+
+  void setTrueOrFalse(bool val) => state = val;
+
+  bool getTrueOrFalse() => state;
+}
+
+final descriptionEditor = StateNotifierProvider<DescriptionEditingClass>(
+    (_) => DescriptionEditingClass());
