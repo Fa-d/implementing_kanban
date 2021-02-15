@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:implementing_kanban/card_item_models/models/comment_object.dart';
 import 'package:implementing_kanban/card_item_models/models/label_object.dart';
 
 class ColorPicked extends StateNotifier<Color> {
@@ -62,3 +63,25 @@ class DescriptionEditingClass extends StateNotifier {
 
 final descriptionEditor = StateNotifierProvider<DescriptionEditingClass>(
     (_) => DescriptionEditingClass());
+
+final addedComments =
+    StateNotifierProvider<AddedComments>((_) => AddedComments([]));
+
+class AddedComments extends StateNotifier<List<CommentObject>> {
+  AddedComments(List<CommentObject> items) : super(items ?? <CommentObject>[]);
+
+  addToComment(CommentObject item) => state = [...state, item];
+
+  getComments() => state;
+}
+
+class ShowOrHideComments extends StateNotifier {
+  ShowOrHideComments() : super(false);
+
+  void setTrueOrFalse(bool val) => state = val;
+
+  bool getTrueOrFalse() => state;
+}
+
+final showOrHideComment =
+    StateNotifierProvider<ShowOrHideComments>((_) => ShowOrHideComments());

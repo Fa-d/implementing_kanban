@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:implementing_kanban/card_item_models/checklist_model.dart';
+import 'package:implementing_kanban/card_item_models/models/comment_object.dart';
 import 'package:implementing_kanban/popups/botton_popups/button_models.dart';
 import 'package:implementing_kanban/providers_packs/all_providers.dart';
 
@@ -28,6 +29,8 @@ leftSidePopUp(BuildContext context, setState) {
   var _controller = TextEditingController();
   return Consumer(builder: (context, watch, _) {
     final descripText = watch(descriptionEditor);
+    final commentContainer = watch(addedComments);
+    final isCommentShowing = watch(showOrHideComment);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,20 +129,66 @@ leftSidePopUp(BuildContext context, setState) {
           children: [
             Text("Comment"),
             FlatButton(
-              onPressed: () {},
-              child: Text("Show Details"),
+              onPressed: () {
+                isCommentShowing.getTrueOrFalse()
+                    ? context.read(showOrHideComment).setTrueOrFalse(false)
+                    : context.read(showOrHideComment).setTrueOrFalse(true);
+                setState(() {});
+              },
+              child: Text(isCommentShowing.getTrueOrFalse()
+                  ? "Show Details"
+                  : "Hide Comments"),
             ),
           ],
         ),
         SizedBox(
           height: 20,
         ),
-        Align(
-          alignment: Alignment.bottomLeft,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: RaisedButton(child: Text("Submitß"), onPressed: () {}),
+        SizedBox(
+          width: MediaQuery.of(context).size.width / 4,
+          child: TextFormField(
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+            controller: _controller,
+            decoration: InputDecoration(
+              hintText: 'add your comment',
+              border: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(12.0),
+                ),
+                borderSide: new BorderSide(
+                  color: Colors.black,
+                  width: 1.0,
+                ),
+              ),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  // _controller.clear();
+                  setState(() {});
+                  context.read(addedComments).addToComment(CommentObject(
+                      title: _controller.text, subtitle: 'asdasds'));
+                  print(commentContainer.getComments());
+                },
+                icon: Icon(Icons.done),
+              ),
+            ),
           ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        isCommentShowing.getTrueOrFalse()
+            ? Container()
+            : Column(
+                children: [
+                  ...commentContainer
+                      .getComments()
+                      .map((e) => commentUnit(e.title, context, e.subtitle))
+                      .toList(),
+                ],
+              ),
+        SizedBox(
+          height: 20,
         ),
         Container(
           width: MediaQuery.of(context).size.width / 3.5,
@@ -147,6 +196,22 @@ leftSidePopUp(BuildContext context, setState) {
       ],
     );
   });
+}
+
+commentUnit(String title, BuildContext context, String subtitle) {
+  return SizedBox(
+    width: MediaQuery.of(context).size.width / 4,
+    child: Padding(
+      padding: const EdgeInsets.all(3.0),
+      child: ListTile(
+        leading: CircleAvatar(
+          child: Text(title),
+        ),
+        title: Text(title),
+        subtitle: Text(subtitle),
+      ),
+    ),
+  );
 }
 
 rightSidePopup(BuildContext context) => Container(
