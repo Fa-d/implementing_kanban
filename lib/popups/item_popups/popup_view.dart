@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/all.dart';
+import 'package:implementing_kanban/card_item_models/attatchment_model.dart';
 import 'package:implementing_kanban/card_item_models/checklist_model.dart';
 import 'package:implementing_kanban/card_item_models/models/comment_object.dart';
 import 'package:implementing_kanban/popups/botton_popups/button_models.dart';
+import 'package:implementing_kanban/popups/left_models/attatchmnet_widget.dart';
 import 'package:implementing_kanban/providers_packs/all_providers.dart';
 
 popUpTest(context) {
@@ -31,6 +33,7 @@ leftSidePopUp(BuildContext context, setState) {
     final descripText = watch(descriptionEditor);
     final commentContainer = watch(addedComments);
     final isCommentShowing = watch(showOrHideComment);
+    final attatchmentListsProv = watch(attatchmentLists);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +89,6 @@ leftSidePopUp(BuildContext context, setState) {
             ? GestureDetector(
                 onTap: () {
                   setState(() {});
-
                   context.read(descriptionEditor).setTrueOrFalse(false);
                 },
                 child: Text("Write your description"),
@@ -112,7 +114,6 @@ leftSidePopUp(BuildContext context, setState) {
                       onPressed: () {
                         _controller.clear();
                         setState(() {});
-
                         context.read(descriptionEditor).setTrueOrFalse(true);
                       },
                       icon: Icon(Icons.clear),
@@ -120,6 +121,12 @@ leftSidePopUp(BuildContext context, setState) {
                   ),
                 ),
               ),
+        SizedBox(
+          height: 20,
+        ),
+        attatchmentListsProv.getAttatchemts()  <= 0
+            ? Container(color: Colors.red)
+            : AttatchmentWidget(),
         SizedBox(
           height: 20,
         ),
@@ -253,9 +260,11 @@ _addToCard() => [
       SizedBox(height: 10),
       CheckListModel(buttonName: "CheckList"),
       SizedBox(height: 10),
-      ButtonModels(buttonName: "Due Date"),
+      AtatchmentModel(
+        buttonName: "Attatchment",
+      ),
       SizedBox(height: 10),
-      ButtonModels(buttonName: "Attatchment"),
+      ButtonModels(buttonName: "Due Date"),
       SizedBox(height: 10),
       ButtonModels(buttonName: "Cover"),
     ];

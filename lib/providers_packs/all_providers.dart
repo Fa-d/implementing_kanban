@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:implementing_kanban/card_item_models/models/attatchment_object.dart';
 import 'package:implementing_kanban/card_item_models/models/comment_object.dart';
 import 'package:implementing_kanban/card_item_models/models/label_object.dart';
 
@@ -85,3 +86,14 @@ class ShowOrHideComments extends StateNotifier {
 
 final showOrHideComment =
     StateNotifierProvider<ShowOrHideComments>((_) => ShowOrHideComments());
+
+
+final attatchmentLists = StateNotifierProvider<AttatchmentModelsList>(
+    (_) => AttatchmentModelsList([]));
+
+class AttatchmentModelsList extends StateNotifier<List<AttatchmentModels>> {
+  AttatchmentModelsList(List<AttatchmentModels> items)
+      : super(items ?? <AttatchmentModels>[]);
+  getAttatchemts() => state.length;
+  addToAttatchment(AttatchmentModels item) => state = [...state, item];
+}
